@@ -109,7 +109,7 @@ export default Vue.extend({
     },
     async gerarAPR() {
       this.totalRisks.push({ ...this.data, number: this.pagenumber })
-      const newApr = { ...this.basicApr, risks: { ...this.totalRisks } }
+      const newApr = { ...this.basicApr, risks: [...this.totalRisks] }
       console.log(newApr)
       //resetar padroes
       const data = { local: '', equip: '', description: '', epis: '' }

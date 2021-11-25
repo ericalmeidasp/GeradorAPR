@@ -48,7 +48,7 @@ app.post("/newapr", async (request: any, response: any) => {
     newDate.getFullYear();
 
   const APR: APR = { date, local, equip, description, epis, risks };
-
+  console.log(APR)
   const idApr:any = await GetNewAprOnDB(APR);
   const newAprWithNumber = await getNumber(idApr)
   generatePlan(newAprWithNumber);

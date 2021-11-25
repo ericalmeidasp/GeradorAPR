@@ -3,6 +3,9 @@ import { APR } from '../typagem'
 export const newSheet = (dataApr: APR) => {
     const sheets = [];
     for (var prop in dataApr.risks) {
+      const riskName = dataApr.risks[prop].name.split(';')
+      const riskAcidente = dataApr.risks[prop].acidente.split(';')
+      const riskProtecao = dataApr.risks[prop].protecao.split(';')
       const newtable = `<table:table table:name="PG_${dataApr.risks[prop].number + 1}" table:style-name="ta1">
       <table:table-column table:style-name="co1" table:number-columns-repeated="4" table:default-cell-style-name="ce1"/>
       <table:table-column table:style-name="co2" table:number-columns-repeated="2" table:default-cell-style-name="ce1"/>
@@ -76,14 +79,19 @@ export const newSheet = (dataApr: APR) => {
       </table:table-row>
       <table:table-row table:style-name="ro2">
       <table:table-cell office:value-type="string" table:style-name="ce12">
-      <text:p>${dataApr.risks[prop].name}</text:p>
+      <text:p>${riskName[0]}</text:p>
+      <text:p>${riskName[1]}</text:p>
+      <text:p>${riskName[2]}</text:p>
       </table:table-cell>
       <table:table-cell office:value-type="string" table:number-columns-spanned="2" table:number-rows-spanned="1" table:style-name="ce22">
-      <text:p>${dataApr.risks[prop].acidente}</text:p>
+      <text:p>${riskAcidente[0]}</text:p>
+      <text:p>${riskAcidente[1]}</text:p>
       </table:table-cell>
       <table:covered-table-cell/>
       <table:table-cell office:value-type="string" table:number-columns-spanned="3" table:number-rows-spanned="1" table:style-name="ce23">
-      <text:p>${dataApr.risks[prop].protecao[0] ? `${dataApr.risks[prop].protecao[0]}` : ''}</text:p>
+      <text:p>${riskProtecao[0]}</text:p>
+      <text:p>${riskProtecao[1]}</text:p>
+      <text:p>${riskProtecao[2]}</text:p>
       </table:table-cell>
       <table:covered-table-cell table:number-columns-repeated="2"/>
       <table:table-cell table:number-columns-repeated="16378"/>
@@ -93,7 +101,7 @@ export const newSheet = (dataApr: APR) => {
       <table:table-cell table:number-columns-spanned="2" table:number-rows-spanned="1" table:style-name="ce24"/>
       <table:covered-table-cell/>
       <table:table-cell office:value-type="string" table:number-columns-spanned="3" table:number-rows-spanned="1" table:style-name="ce25">
-      <text:p>${dataApr.risks[prop].protecao[1] ? `${dataApr.risks[prop].protecao[1]}` : ''}</text:p>
+      <text:p>--</text:p>
       </table:table-cell>
       <table:covered-table-cell table:number-columns-repeated="2"/>
       <table:table-cell table:number-columns-repeated="16378"/>
@@ -103,7 +111,7 @@ export const newSheet = (dataApr: APR) => {
       <table:table-cell table:number-columns-spanned="2" table:number-rows-spanned="1" table:style-name="ce24"/>
       <table:covered-table-cell/>
       <table:table-cell office:value-type="string" table:number-columns-spanned="3" table:number-rows-spanned="1" table:style-name="ce25">
-      <text:p>${dataApr.risks[prop].protecao[2] ? `${dataApr.risks[prop].protecao[2]}` : ''}</text:p>
+      <text:p>--</text:p>
       </table:table-cell>
       <table:covered-table-cell table:number-columns-repeated="2"/>
       <table:table-cell table:number-columns-repeated="16378"/>
@@ -113,7 +121,7 @@ export const newSheet = (dataApr: APR) => {
       <table:table-cell table:number-columns-spanned="2" table:number-rows-spanned="1" table:style-name="ce24"/>
       <table:covered-table-cell/>
       <table:table-cell office:value-type="string" table:number-columns-spanned="3" table:number-rows-spanned="1" table:style-name="ce25">
-      <text:p>${dataApr.risks[prop].protecao[3] ? `${dataApr.risks[prop].protecao[3]}` : ''}</text:p>
+      <text:p>--</text:p>
       </table:table-cell>
       <table:covered-table-cell table:number-columns-repeated="2"/>
       <table:table-cell table:number-columns-repeated="16378"/>

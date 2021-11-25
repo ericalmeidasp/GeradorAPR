@@ -112,9 +112,9 @@ export default Vue.extend({
     },
     getEpis() {
       const data: APR = {
-        local: '',
-        equip: '',
-        description: '',
+        local: this.data.local,
+        equip: this.data.equip,
+        description: this.data.description,
         epis: 'lista padrao'
       }
       aprs.setApr(data)

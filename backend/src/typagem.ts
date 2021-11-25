@@ -8,8 +8,8 @@ export interface Risk {
     id?: number,
     number: number,
     name: string,
-    acidente: string
-    protecao: Array<string>
+    acidente: string,
+    protecao: string
 }
 
 export interface APR {

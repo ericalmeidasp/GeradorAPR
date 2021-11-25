@@ -66,21 +66,8 @@ export default class APRs extends VuexModule {
   }
 
   @Action
-  public fetchGlobalRisks() {
-    const risks = [{
-      name: 'Trabalho em altura',
-      acidente: 'Alguns riscos',
-      protecao: 'usar cinto'
-    }, {
-      name: 'Trabalho em Espaço confinado',
-      acidente: 'Alguns de ar',
-      protecao: 'usar gas'
-    }, {
-      name: 'Trabalho com solda',
-      acidente: 'se queimar',
-      protecao: 'se cuidar'
-    }]
-    // await $axios.$get('/risks')
+  public async fetchGlobalRisks() {
+    const risks = await $axios.$get('/risks')
     this.context.commit('SET_GLOBALRISKS', risks)
   }
 
