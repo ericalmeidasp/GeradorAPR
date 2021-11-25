@@ -100,7 +100,8 @@ export default Vue.extend({
       if (
         this.data.local.length > 2 &&
         this.data.equip.length > 2 &&
-        this.data.description.length > 2
+        this.data.description.length > 2 &&
+        this.data.epis.length > 2
       ) {
         aprs.setApr(this.data)
         gerais.index('MakeAprRiscos')

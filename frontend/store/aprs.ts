@@ -9,7 +9,12 @@ interface Show {
 @Module({ name: 'aprs', stateFactory: true, namespaced: true })
 export default class APRs extends VuexModule {
   private aprs = [] as APR[]
-  private apr = {epis:''} as APR
+  private apr = {
+    local: '',
+    equip: '',
+    description: '',
+    epis: ''
+  } as APR
   private risks = [] as Risk[]
   private globalRis = [] as Risk[]
 
