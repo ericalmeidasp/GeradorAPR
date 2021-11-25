@@ -1,14 +1,10 @@
-interface Risk {
-    id: number,
+export interface Risk {
+    id?: number,
     name: string,
     acidente: string
-    protecao: Array<string>
+    protecao: string
 }
 
-interface EPIs {
-    id: number,
-    name: string
-}
 
 export interface APR {
     id?: string,
@@ -17,6 +13,6 @@ export interface APR {
     local: string,
     equip: string,
     description: string,
-    epis: Array<EPIs>,
+    epis: string,
     risks: Array<Risk>
 }

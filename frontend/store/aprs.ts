@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
-import { APR } from '@/models'
+import { APR, Risk } from '@/models'
 import { $axios } from '@/utils/nuxt-instance'
 
 interface Show {
@@ -10,6 +10,8 @@ interface Show {
 export default class APRs extends VuexModule {
   private aprs = [] as APR[]
   private apr = {} as APR
+  private risks = [] as Risk[]
+  private globalRis = [] as Risk[]
 
   public get $all() {
     return this.aprs
@@ -17,6 +19,14 @@ export default class APRs extends VuexModule {
 
   public get $single() {
     return this.apr
+  }
+
+  public get $risks() {
+    return this.risks
+  }
+
+  public get $globalRisks() {
+    return this.globalRis
   }
 
   @Mutation
@@ -29,6 +39,16 @@ export default class APRs extends VuexModule {
     this.aprs = aprs
   }
 
+  @Mutation
+  private SET_RISKS(risks: Risk[]) {
+    this.risks = risks
+  }
+
+  @Mutation
+  private SET_GLOBALRISKS(globalRisks: Risk[]) {
+    this.globalRis = globalRisks
+  }
+
   @Action
   public async index() {
     const aprs = await $axios.$get('/aprs')
@@ -39,6 +59,30 @@ export default class APRs extends VuexModule {
   public async show({ id }: Show) {
     const book = await $axios.$get(`/apr/${id}`)
     this.context.commit('SET_SINGLE', book)
+  }
+
+  @Action
+  public fetchGlobalRisks() {
+    const risks = [{
+      name: 'Trabalho em altura',
+      acidente: 'Alguns riscos',
+      protecao: 'usar cinto'
+    }, {
+      name: 'Trabalho em Espaço confinado',
+      acidente: 'Alguns de ar',
+      protecao: 'usar gas'
+    }, {
+      name: 'Trabalho com solda',
+      acidente: 'se queimar',
+      protecao: 'se cuidar'
+    }]
+    // await $axios.$get('/risks')
+    this.context.commit('SET_GLOBALRISKS', risks)
+  }
+
+  @Action
+  public addRisks(risk: Risk) {
+    this.context.commit('SET_RISKS', risk)
   }
 
 }

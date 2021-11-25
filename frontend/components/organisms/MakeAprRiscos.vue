@@ -1,88 +1,89 @@
 <template>
   <div class="releases">
     <span class="login100-form-title"> Digite os dados da nova APR </span>
+
     <form class="login100-form validate-form">
       <div class="wrap-input100 validate-input">
         <input
-          v-model="data.local"
-          :class="{ 'has-val': data.local }"
-          class="input100"
-          type="text"
-        />
-        <span class="focus-input100" data-placeholder="Área / Local"></span>
-      </div>
-
-      <div class="wrap-input100 validate-input">
-        <input
-          v-model="data.equip"
-          :class="{ 'has-val': data.equip }"
+          v-model="data.name"
+          :class="{ 'has-val': data.name }"
           class="input100"
           type="text"
         />
         <span
           class="focus-input100"
-          data-placeholder="Equipamento / Linha"
+          data-placeholder="Sequencia do Trabalho (procedimentos)"
         ></span>
       </div>
 
       <div class="wrap-input100 validate-input">
         <input
-          v-model="data.description"
-          :class="{ 'has-val': data.description }"
+          v-model="data.acidente"
+          :class="{ 'has-val': data.acidente }"
           class="input100"
           type="text"
         />
         <span
           class="focus-input100"
-          data-placeholder="Descrição da Atividade"
+          data-placeholder="Potencial de Acidentes ou Perdas"
         ></span>
       </div>
 
       <div class="wrap-input100 validate-input">
         <input
-          v-model="data.epi"
-          :class="{ 'has-val': data.epi }"
+          v-model="data.protecao"
+          :class="{ 'has-val': data.protecao }"
           class="input100"
           type="text"
         />
-
-        <!-- <input id="capacete" v-model="data.epi" type="checkbox" value="1" >
-        <label for="capacete">Capacete</label>
-
-        <input id="botina" v-model="data.epi" type="checkbox" value="2" >
-        <label for="Botina">botina</label> -->
-
         <span
           class="focus-input100"
-          data-placeholder="Equipamento de proteção (EPIs ou EPCs)"
-        >
-        </span>
+          data-placeholder="Procedimentos de Segurança"
+        ></span>
       </div>
     </form>
+
     <div class="container-login100-form-btn">
-      <button class="login100-form-btn" @click="next" >Avançar</button>
+      <button class="login100-form-btn" @click="back">Voltar</button>
+      <button class="login100-form-btn" @click="nextRisk">Avançar</button>
+      <button class="login100-form-btn">Gerar APR</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { gerais } from '@/store'
+import { aprs, gerais } from '@/store'
+import { Risk } from '@/models'
 
 export default Vue.extend({
   data() {
     return {
-      data: {
-        local: '',
-        equip: '',
-        description: '',
-        epi: ''
-      }
+      data: { name: '', acidente: '', protecao: '' },
+      showRisk: 0,
+      totalRisks: [] as Risk[],
+      globalRisk: []
     }
   },
+  computed: {
+    $globalRisk() {
+      return aprs.$globalRisks
+    }
+  },
+  mounted() {
+    this.data = this.globalRisk[this.showRisk]
+  },
   methods: {
-    next() {
-      gerais.index('MakeAprRiscos')
+    back() {
+      gerais.index('MakeApr')
+    },
+    nextRisk() {
+      console.log(this.globalRisk[this.showRisk])
+      if (this.showRisk < this.globalRisk.length) {
+        this.totalRisks.push(this.data)
+        this.showRisk++
+        this.data = this.globalRisk[this.showRisk]
+      }
     }
   }
 })

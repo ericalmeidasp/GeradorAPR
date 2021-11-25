@@ -58,7 +58,24 @@ app.post("/newapr", async (request: any, response: any) => {
 
 // ROTAS RISKS
 
-
+app.get("/risks", async (request: any, response: any) => {
+  const risks = [{
+    name: 'oi',
+    acidente: 'ola',
+    protecao: 'oie'
+  },
+  {
+    name: 'o1i',
+    acidente: 'ol1a',
+    protecao: 'o1ie'
+  },
+  {
+    name: 'o2i',
+    acidente: 'o2la',
+    protecao: 'o2ie'
+  }]
+  return response.json(risks)
+})
 
 
 

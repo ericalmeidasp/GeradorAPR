@@ -8,10 +8,11 @@
               <thead>
                 <tr class="row100 head">
                   <th class="cell100 column1">APR Descrição</th>
-                  <th class="cell100 column2">Numero e data</th>
-                  <th class="cell100 column3">Local</th>
-                  <th class="cell100 column4">Equipamento</th>
-                  <th class="cell100 column5">Download</th>
+                  <th class="cell100 column2">Nº</th>
+                  <th class="cell100 column3">Data</th>
+                  <th class="cell100 column4">Local</th>
+                  <th class="cell100 column5">Linha</th>
+                  <th class="cell100 column6">Download</th>
                 </tr>
               </thead>
             </table>
@@ -20,18 +21,19 @@
           <div class="table100-body js-pscroll">
             <table>
               <tbody>
-                <tr class="row100 body" v-for="apr in $aprs" :key="apr.number">
+                <tr v-for="apr in $aprs" :key="apr.number" class="row100 body" >
                   <td class="cell100 column1">
                     {{ apr.description }}
                   </td>
-                  <td class="cell100 column2"> {{ apr.number }} -- {{ apr.date }} </td>
-                  <td class="cell100 column3">
+                  <td class="cell100 column2"> {{ apr.number }} </td>
+                  <td class="cell100 column3"> {{ apr.date }} </td>
+                  <td class="cell100 column4">
                     {{ apr.local }}
                   </td>
-                  <td class="cell100 column4">
+                  <td class="cell100 column5">
                     {{ apr.equip }}
                   </td>
-                  <td class="cell100 column5">
+                  <td class="cell100 column6">
                   <button @click="download(apr.number)" > Baixar </button>
                   </td>
                 </tr>
@@ -57,7 +59,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    async download(number: number) {
+    download(number: any) {
       window.open(`http://localhost:3333/download/${number}`)
       }
   }
@@ -95,6 +97,10 @@ export default Vue.extend({
   background-color: #fff;
 }
 
+.row100 {
+  text-align: center;
+}
+
 table {
   width: 100%;
 }
@@ -110,18 +116,22 @@ td {
 }
 
 .column2 {
-  width: 15%;
+  width: 5%;
 }
 
 .column3 {
-  width: 15%;
+  width: 10%;
 }
 
 .column4 {
-  width: 22%;
+  width: 15%;
 }
 
 .column5 {
+  width: 22%;
+}
+
+.column6 {
   width: 10%;
 }
 
@@ -162,7 +172,7 @@ td {
   color: #fff;
   line-height: 1.4;
 
-  background-color: #6c7ae0;
+  background-color: #57b846;
 }
 
 .table100.ver1 td {
