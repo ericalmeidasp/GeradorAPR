@@ -1,6 +1,6 @@
 <template>
   <div class="releases">
-    <span class="login100-form-title"> Digite os dados da nova APR </span>
+    <span :class="{ 'alert': alert }" class="login100-form-title"> Digite os dados da nova APR </span>
     <form class="login100-form validate-form">
       <div class="wrap-input100 validate-input">
         <input
@@ -40,8 +40,8 @@
 
       <div class="wrap-input100 validate-input">
         <input
-          v-model="data.epi"
-          :class="{ 'has-val': data.epi }"
+          v-model="data.epis"
+          :class="{ 'has-val': data.epis }"
           class="input100"
           type="text"
         />
@@ -60,14 +60,16 @@
       </div>
     </form>
     <div class="container-login100-form-btn">
-      <button class="login100-form-btn" @click="next" >Avançar</button>
+      <button class="login100-form-btn" @click="getEpis">EPIs Padrão</button>
+      <button class="login100-form-btn" @click="next">Avançar</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { gerais } from '@/store'
+import { aprs, gerais } from '@/store'
+import { APR } from '~/models'
 
 export default Vue.extend({
   data() {
@@ -76,13 +78,46 @@ export default Vue.extend({
         local: '',
         equip: '',
         description: '',
-        epi: ''
-      }
+        epis: ''
+      } as APR,
+      single: {} as APR,
+      alert: false
     }
   },
+
+  watch: {
+    single(val) {
+      this.data = { ...val }
+    }
+  },
+
+  mounted() {
+    this.single = aprs.$single
+  },
+
   methods: {
     next() {
-      gerais.index('MakeAprRiscos')
+      if (
+        this.data.local.length > 2 &&
+        this.data.equip.length > 2 &&
+        this.data.description.length > 2
+      ) {
+        aprs.setApr(this.data)
+        gerais.index('MakeAprRiscos')
+      }
+      else {
+        this.alert = true
+      }
+    },
+    getEpis() {
+      const data: APR = {
+        local: '',
+        equip: '',
+        description: '',
+        epis: 'lista padrao'
+      }
+      aprs.setApr(data)
+      this.single = aprs.$single
     }
   }
 })
@@ -97,6 +132,9 @@ export default Vue.extend({
     font-weight: 500;
     color: color(dark, darkest);
   }
+}
+.alert {
+  color: red!important;
 }
 
 .login100-form {

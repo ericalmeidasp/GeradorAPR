@@ -9,7 +9,7 @@ interface Show {
 @Module({ name: 'aprs', stateFactory: true, namespaced: true })
 export default class APRs extends VuexModule {
   private aprs = [] as APR[]
-  private apr = {} as APR
+  private apr = {epis:''} as APR
   private risks = [] as Risk[]
   private globalRis = [] as Risk[]
 
@@ -56,9 +56,8 @@ export default class APRs extends VuexModule {
   }
 
   @Action
-  public async show({ id }: Show) {
-    const book = await $axios.$get(`/apr/${id}`)
-    this.context.commit('SET_SINGLE', book)
+  public setApr(apr: APR) {
+    this.context.commit('SET_SINGLE', apr)
   }
 
   @Action
@@ -83,6 +82,11 @@ export default class APRs extends VuexModule {
   @Action
   public addRisks(risk: Risk) {
     this.context.commit('SET_RISKS', risk)
+  }
+
+  @Action
+  public async enviarAPR(newAPR: APR) {
+    await $axios.$post('/newapr', newAPR)
   }
 
 }

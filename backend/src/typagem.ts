@@ -5,7 +5,8 @@ export interface User {
 }
 
 export interface Risk {
-    id: number,
+    id?: number,
+    number: number,
     name: string,
     acidente: string
     protecao: Array<string>

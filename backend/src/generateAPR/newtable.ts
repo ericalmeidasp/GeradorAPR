@@ -3,7 +3,7 @@ import { APR } from '../typagem'
 export const newSheet = (dataApr: APR) => {
     const sheets = [];
     for (var prop in dataApr.risks) {
-      const newtable = `<table:table table:name="PG_${dataApr.risks[prop].id + 1}" table:style-name="ta1">
+      const newtable = `<table:table table:name="PG_${dataApr.risks[prop].number + 1}" table:style-name="ta1">
       <table:table-column table:style-name="co1" table:number-columns-repeated="4" table:default-cell-style-name="ce1"/>
       <table:table-column table:style-name="co2" table:number-columns-repeated="2" table:default-cell-style-name="ce1"/>
       <table:table-column table:style-name="co3" table:number-columns-repeated="16378" table:default-cell-style-name="ce1"/>
@@ -62,7 +62,7 @@ export const newSheet = (dataApr: APR) => {
       <text:p>Páginas</text:p>
       </table:table-cell>
       <table:table-cell office:value-type="string" table:style-name="ce5">
-      <text:p>${dataApr.risks[prop].id + 1} de ${dataApr.risks.length + 5}</text:p>
+      <text:p>${dataApr.risks[prop].number + 1} de ${dataApr.risks.length + 5}</text:p>
       </table:table-cell>
       <table:table-cell table:number-columns-repeated="6"/>
       <table:table-cell table:style-name="ce1">
@@ -234,7 +234,7 @@ export const newSheet = (dataApr: APR) => {
       <table:table-cell table:number-columns-repeated="16384"/>
       </table:table-row>
       <table:named-expressions>
-      <table:named-range table:name="Print_Area" table:cell-range-address="PG_${dataApr.risks[prop].id + 1}.$A$1:PG_${dataApr.risks[prop].id + 1}.$F$18" table:base-cell-address="PG_${dataApr.risks[prop].id + 1}.$A$1"/>
+      <table:named-range table:name="Print_Area" table:cell-range-address="PG_${dataApr.risks[prop].number + 1}.$A$1:PG_${dataApr.risks[prop].number + 1}.$F$18" table:base-cell-address="PG_${dataApr.risks[prop].number + 1}.$A$1"/>
       </table:named-expressions>
       </table:table>`
       sheets.push(newtable);

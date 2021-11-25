@@ -1,122 +1,21 @@
 <template>
   <div class="releases">
-    <span class="login100-form-title"> Digite os dados da nova APR </span>
-
-    <form class="login100-form validate-form">
-      <div class="wrap-input100 validate-input">
-        <input
-          v-model="data.name"
-          :class="{ 'has-val': data.name }"
-          class="input100"
-          type="text"
-        />
-        <span
-          class="focus-input100"
-          data-placeholder="Sequencia do Trabalho (procedimentos)"
-        ></span>
-      </div>
-
-      <div class="wrap-input100 validate-input">
-        <input
-          v-model="data.acidente"
-          :class="{ 'has-val': data.acidente }"
-          class="input100"
-          type="text"
-        />
-        <span
-          class="focus-input100"
-          data-placeholder="Potencial de Acidentes ou Perdas"
-        ></span>
-      </div>
-
-      <div class="wrap-input100 validate-input">
-        <input
-          v-model="data.protecao"
-          :class="{ 'has-val': data.protecao }"
-          class="input100"
-          type="text"
-        />
-        <span
-          class="focus-input100"
-          data-placeholder="Procedimentos de Segurança"
-        ></span>
-      </div>
-    </form>
-
-    <div class="container-login100-form-btn">
-      <button class="login100-form-btn" @click="back">Voltar</button>
-      <button v-if="lastPage" @click="gerarAPR" class="login100-form-btn">
-        Gerar APR
-      </button>
-      <button v-else class="login100-form-btn" @click="jumpRisk">
-        Pular Etapa
-      </button>
-      <button v-if="!lastPage" class="login100-form-btn" @click="nextRisk">
-        Adicionar Etapa
-      </button>
+    <span class="login100-form-title"> APR Finalizada. Visualizar na lista. </span>
+    
+    <div class="center">
+     <nuxt-link to="/listapr"> <button class="login100-form-btn">Ir para Listas</button>
+     </nuxt-link>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { aprs, gerais } from '@/store'
-import { Risk } from '@/models'
+import { gerais } from '~/store'
 
 export default Vue.extend({
-  data() {
-    return {
-      data: { name: '', acidente: '', protecao: '', number: 0 },
-      showRisk: 0,
-      pagenumber: 2,
-      totalRisks: [] as Risk[]
-    }
-  },
-  watch: {
-    risks(val) {
-      this.data = { ...val, number: 0 }
-    }
-  },
-  computed: {
-    $globalRisk() {
-      return aprs.$globalRisks
-    },
-    risks(): Risk {
-      return aprs.$globalRisks[this.showRisk]
-    },
-    lastPage(): boolean {
-      return this.showRisk === this.$globalRisk.length - 1
-    },
-    basicApr() {
-      return aprs.$single
-    }
-  },
-  mounted() {
-    aprs.fetchGlobalRisks()
-  },
-  methods: {
-    back() {
-      this.totalRisks = []
-      gerais.index('MakeApr')
-    },
-    nextRisk() {
-      this.totalRisks.push({ ...this.data, number: this.pagenumber })
-      this.pagenumber++
-      this.showRisk++
-    },
-    jumpRisk() {
-      this.showRisk++
-    },
-    async gerarAPR() {
-      this.totalRisks.push({ ...this.data, number: this.pagenumber })
-      const newApr = { ...this.basicApr, risks: { ...this.totalRisks } }
-      console.log(newApr)
-      //resetar padroes
-      const data = { local: '', equip: '', description: '', epis: '' }
-      aprs.setApr(data)
-      await aprs.enviarAPR(newApr)
-      gerais.index('SuccessApr')
-    }
+  beforeDestroy() {
+    gerais.index('MakeApr')
   }
 })
 </script>
@@ -131,7 +30,10 @@ export default Vue.extend({
     color: color(dark, darkest);
   }
 }
-
+.center {
+  display: flex;
+  justify-content: center;
+}
 .login100-form {
   width: 100%;
 }
@@ -260,7 +162,7 @@ export default Vue.extend({
   align-items: center;
   padding: 0 20px;
   width: 150px;
-  height: 50px;
+  height: 70px;
   background-color: #57b846;
   border-radius: 25px;
 
