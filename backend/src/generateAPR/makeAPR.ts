@@ -1,10 +1,17 @@
 const zipper = require('zip-local')
+const CloudmersiveConvertApiClient = require('cloudmersive-convert-api-client');
+const defaultClient = CloudmersiveConvertApiClient.ApiClient.instance;
 // import zipper from 'zip-local'
 import fs from 'fs'
 import { newSheet, finalPlan } from './newtable'
 import { APR } from '../typagem'
 
+
 export const generatePlan = (dataApr: APR) => {
+    
+    const Apikey = defaultClient.authentications['Apikey'];
+    Apikey.apiKey = '1a8d0f97-50d3-441f-be0d-a220aa5fc3be';
+    const apiInstance = new CloudmersiveConvertApiClient.ConvertDocumentApi();
 
     const tables = newSheet(dataApr);
 
@@ -32,6 +39,18 @@ export const generatePlan = (dataApr: APR) => {
 
     zipper.sync.zip(aprURL + "/unzipped/").save(aprURL + `/APR${dataApr.number}.ods`);
     fs.rmSync(aprURL + '/unzipped', { recursive: true })
+
+    const inputFile = fs.readFileSync(aprURL + `/APR${dataApr.number}.ods`); // inputFile = aprURL + `/APR${dataApr.number}.ods`;
+
+    const callback = function(error:any, data:any, response:any) {
+        if (error) {
+          console.error(error);
+        } else {
+            fs.writeFileSync(aprURL + `/APR${dataApr.number}.pdf`, data)
+          console.log('API called successfully. Returned data: ');
+        }
+      };
+      apiInstance.convertDocumentOdsToPdf(Buffer.from(inputFile.buffer), callback);
 
 
     return aprURL + `/APR${dataApr.number}.ods`
