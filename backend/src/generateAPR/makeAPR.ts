@@ -1,11 +1,10 @@
 const zipper = require('zip-local')
 const CloudmersiveConvertApiClient = require('cloudmersive-convert-api-client');
 const defaultClient = CloudmersiveConvertApiClient.ApiClient.instance;
-// import zipper from 'zip-local'
+
 import fs from 'fs'
 import { newSheet, finalPlan } from './newtable'
 import { APR } from '../typagem'
-
 
 export const generatePlan = (dataApr: APR) => {
     
@@ -26,11 +25,11 @@ export const generatePlan = (dataApr: APR) => {
 
     const aprURL = './src/generateAPR/APRs/' + dataApr.number
 
-    fs.mkdirSync(aprURL + '/unzipped/media/', { recursive: true })
+    fs.mkdirSync(aprURL + '/unzipped/Pictures/', { recursive: true })
     fs.mkdirSync(aprURL + '/unzipped/META-INF/', { recursive: true })
 
-    fs.writeFileSync(aprURL + '/unzipped/media/image1.png', fs.readFileSync('./src/generateAPR/modelo/media/image1.png'));
-    fs.writeFileSync(aprURL + '/unzipped/media/image2.png', fs.readFileSync('./src/generateAPR/modelo/media/image2.png'));
+    fs.writeFileSync(aprURL + '/unzipped/Pictures/10000201000002A00000018541BD06E30D3371DF.png', fs.readFileSync('./src/generateAPR/modelo/Pictures/10000201000002A00000018541BD06E30D3371DF.png'));
+    fs.writeFileSync(aprURL + '/unzipped/Pictures/10000201000000D50000007815952039505C04A5.png', fs.readFileSync('./src/generateAPR/modelo/Pictures/10000201000000D50000007815952039505C04A5.png'));
     fs.writeFileSync(aprURL + '/unzipped/META-INF/manifest.xml', fs.readFileSync('./src/generateAPR/modelo/META-INF/manifest.xml'));
     fs.writeFileSync(aprURL + '/unzipped/meta.xml', fs.readFileSync('./src/generateAPR/modelo/meta.xml'));
     fs.writeFileSync(aprURL + '/unzipped/mimetype', fs.readFileSync('./src/generateAPR/modelo/mimetype'));
@@ -40,7 +39,7 @@ export const generatePlan = (dataApr: APR) => {
     zipper.sync.zip(aprURL + "/unzipped/").save(aprURL + `/APR${dataApr.number}.ods`);
     fs.rmSync(aprURL + '/unzipped', { recursive: true })
 
-    const inputFile = fs.readFileSync(aprURL + `/APR${dataApr.number}.ods`); // inputFile = aprURL + `/APR${dataApr.number}.ods`;
+    const inputFile = fs.readFileSync(aprURL + `/APR${dataApr.number}.ods`); 
 
     const callback = function(error:any, data:any, response:any) {
         if (error) {

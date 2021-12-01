@@ -6,7 +6,7 @@ export interface User {
 
 export interface Risk {
     id?: number,
-    number: number,
+    number?: number,
     name: string,
     acidente: string,
     protecao: string
@@ -22,3 +22,8 @@ export interface APR {
     epis: string,
     risks: Array<Risk>
 }
+
+export interface Paginas {
+    atual: number,
+    total: number
+  }

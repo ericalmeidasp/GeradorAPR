@@ -34,7 +34,8 @@
                     {{ apr.equip }}
                   </td>
                   <td class="cell100 column6">
-                  <button @click="download(apr.number)" > Baixar </button>
+                  <button @click="download(apr.number)" > Excel </button>
+                  <button @click="downloadPdf(apr.number)" > PDF </button>
                   </td>
                 </tr>
               </tbody>
@@ -61,6 +62,9 @@ export default Vue.extend({
   methods: {
     download(number: any) {
       window.open(`http://localhost:3333/download/${number}`)
+      },
+      downloadPdf(number: any) {
+      window.open(`http://localhost:3333/downloadPdf/${number}`)
       }
   }
 })
