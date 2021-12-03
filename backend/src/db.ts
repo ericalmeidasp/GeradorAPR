@@ -73,7 +73,7 @@ export async function GetNewAprOnDB(dataApr: APR) {
       setTimeout(() => {
         y = `${p.insertedId}`
         resolve(y)
-      }, 1200)
+      }, 1500)
     })
   } catch (err) {
     console.log(err)
