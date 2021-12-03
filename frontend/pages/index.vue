@@ -4,10 +4,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-// import { aprs } from '@/store'
+import { aprs } from '@/store'
 
 export default Vue.extend({
-  layout: 'ibook'
+  layout: 'ibook',
+  async asyncData() {
+    await aprs.fetchGlobalRisks()
+  }
 })
 </script>
 

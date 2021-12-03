@@ -1,6 +1,6 @@
 <template>
   <div class="releases">
-    <span class="login100-form-title"> Digite os dados da nova APR </span>
+    <span class="login100-form-title"> Adicione os riscos (";" para quebrar a linha na APR) </span>
 
     <form class="login100-form validate-form">
       <div class="wrap-input100 validate-input">
@@ -45,13 +45,16 @@
 
     <div class="container-login100-form-btn">
       <button class="login100-form-btn" @click="back">Voltar</button>
-      <button v-if="lastPage" @click="gerarAPR" class="login100-form-btn">
-        Gerar APR
+      <button v-if="lastPage" @click="SkipGerarAPR" class="login100-form-btn">
+        Pular e Gerar APR
       </button>
       <button v-else class="login100-form-btn" @click="jumpRisk">
         Pular Etapa
       </button>
-      <button v-if="!lastPage" class="login100-form-btn" @click="nextRisk">
+      <button v-if="lastPage" @click="gerarAPR" class="login100-form-btn">
+        Adicionar e Gerar APR
+      </button>
+      <button v-else class="login100-form-btn" @click="nextRisk">
         Adicionar Etapa
       </button>
     </div>
@@ -92,7 +95,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    aprs.fetchGlobalRisks()
+    this.data = { ...this.risks }
   },
   methods: {
     back() {
@@ -109,6 +112,14 @@ export default Vue.extend({
     },
     async gerarAPR() {
       this.totalRisks.push({ ...this.data, number: this.pagenumber })
+      const newApr = { ...this.basicApr, risks: [...this.totalRisks] }
+      console.log(newApr)
+      //resetar padroes
+      aprs.setApr({ local: '', equip: '', description: '', epis: '' })
+      await aprs.enviarAPR(newApr)
+      gerais.index('SuccessApr')
+    },
+    async SkipGerarAPR() {
       const newApr = { ...this.basicApr, risks: [...this.totalRisks] }
       console.log(newApr)
       //resetar padroes
@@ -157,6 +168,7 @@ export default Vue.extend({
   font-size: 18px;
   color: #555555;
   line-height: 1.2;
+  
 
   display: block;
   width: 100%;
