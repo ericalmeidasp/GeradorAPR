@@ -1,6 +1,8 @@
 <template>
   <div class="releases">
-    <span class="login100-form-title"> Adicione os riscos (";" para quebrar a linha na APR) </span>
+    <span class="login100-form-title">
+      Adicione os riscos (";" para quebrar a linha na APR)
+    </span>
 
     <form class="login100-form validate-form">
       <div class="wrap-input100 validate-input">
@@ -45,13 +47,13 @@
 
     <div class="container-login100-form-btn">
       <button class="login100-form-btn" @click="back">Voltar</button>
-      <button v-if="lastPage" @click="SkipGerarAPR" class="login100-form-btn">
+      <button v-if="lastPage" class="login100-form-btn" @click="SkipGerarAPR">
         Pular e Gerar APR
       </button>
       <button v-else class="login100-form-btn" @click="jumpRisk">
         Pular Etapa
       </button>
-      <button v-if="lastPage" @click="gerarAPR" class="login100-form-btn">
+      <button v-if="lastPage" class="login100-form-btn" @click="gerarAPR">
         Adicionar e Gerar APR
       </button>
       <button v-else class="login100-form-btn" @click="nextRisk">
@@ -75,11 +77,6 @@ export default Vue.extend({
       totalRisks: [] as Risk[]
     }
   },
-  watch: {
-    risks(val) {
-      this.data = { ...val, number: 0 }
-    }
-  },
   computed: {
     $globalRisk() {
       return aprs.$globalRisks
@@ -92,6 +89,11 @@ export default Vue.extend({
     },
     basicApr() {
       return aprs.$single
+    }
+  },
+  watch: {
+    risks(val) {
+      this.data = { ...val, number: 0 }
     }
   },
   mounted() {
@@ -114,7 +116,7 @@ export default Vue.extend({
       this.totalRisks.push({ ...this.data, number: this.pagenumber })
       const newApr = { ...this.basicApr, risks: [...this.totalRisks] }
       console.log(newApr)
-      //resetar padroes
+      // resetar padroes
       aprs.setApr({ local: '', equip: '', description: '', epis: '' })
       await aprs.enviarAPR(newApr)
       gerais.index('SuccessApr')
@@ -122,7 +124,7 @@ export default Vue.extend({
     async SkipGerarAPR() {
       const newApr = { ...this.basicApr, risks: [...this.totalRisks] }
       console.log(newApr)
-      //resetar padroes
+      // resetar padroes
       const data = { local: '', equip: '', description: '', epis: '' }
       aprs.setApr(data)
       await aprs.enviarAPR(newApr)
@@ -168,7 +170,6 @@ export default Vue.extend({
   font-size: 18px;
   color: #555555;
   line-height: 1.2;
-  
 
   display: block;
   width: 100%;

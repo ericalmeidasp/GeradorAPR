@@ -2,9 +2,6 @@ import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { APR, Risk } from '@/models'
 import { $axios } from '@/utils/nuxt-instance'
 
-interface Show {
-  id: APR['id']
-}
 
 @Module({ name: 'aprs', stateFactory: true, namespaced: true })
 export default class APRs extends VuexModule {
@@ -15,7 +12,9 @@ export default class APRs extends VuexModule {
     description: '',
     epis: ''
   } as APR
+
   private risks = [] as Risk[]
+
   private globalRis = [] as Risk[]
 
   public get $all() {
@@ -80,5 +79,4 @@ export default class APRs extends VuexModule {
   public async enviarAPR(newAPR: APR) {
     await $axios.$post('/newapr', newAPR)
   }
-
 }

@@ -61,10 +61,10 @@ export default Vue.extend({
   },
   methods: {
     download(number: any) {
-      window.open(`http://localhost:3333/download/${number}`)
+      window.open(`http://34.135.67.173:3333/download/${number}`)
       },
       downloadPdf(number: any) {
-      window.open(`http://localhost:3333/downloadPdf/${number}`)
+      window.open(`http://34.135.67.173:3333/downloadPdf/${number}`)
       }
   }
 })
